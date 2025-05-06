@@ -6,6 +6,14 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="manage_pengelola.php">
+                <span class="menu-title">Manage Pengelola</span>
+                <i class="mdi mdi-account menu-icon"></i>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="new_visitor.php">
                 <span class="menu-title">New Visitor</span>
