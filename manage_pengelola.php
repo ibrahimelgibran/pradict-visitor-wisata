@@ -5,52 +5,77 @@ check_login();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include("includes/head.php"); ?>
+  
+  <?php include("includes/head.php"); ?>
+  <body>
+  <div class="container-scroller">
+    <?php include("includes/header.php"); ?>
+    <div class="container-fluid page-body-wrapper">
+      <?php include("includes/sidebar.php"); ?>
 
-<body>
-<?php include("includes/header.php"); ?>
-<?php include("includes/sidebar.php"); ?>
-
-<div class="main-panel">
-  <div class="content-wrapper">
-    <h4>Manajemen Pengelola Wisata</h4>
-    <button id="btnTambah" class="btn btn-dark mb-3">Tambah</button>
-    <div id="jumlahPengelola" class="mb-2"></div>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Nama Wisata</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody id="tabelPengelola"></tbody>
-      </table>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <h4 class="mb-3">Manajemen Pengelola Wisata</h4>
+          <button id="btnTambah" class="btn btn-dark mb-3">Tambah Pengelola</button>
+          <div id="jumlahPengelola" class="mb-3"></div>
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Nama Wisata</th>
+                      <th>Username</th>
+                      <th>Password</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelPengelola"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer>Made with love by <a href="http://iegcode.com"> iegcode</a></footer>
+      </div>
     </div>
   </div>
-</div>
+
 
 <!-- Modal Form -->
-<div id="modalForm" class="modal" style="display:none;">
-  <div class="modal-dialog">
-    <div class="modal-content p-4">
-      <h5 id="modalTitle">Tambah Pengelola</h5>
-      <form id="formPengelola">
-        <input type="hidden" name="id" id="id">
-        <input type="text" name="nama" id="nama" placeholder="Nama" class="form-control mb-2" required>
-        <input type="text" name="nama_wisata" id="nama_wisata" placeholder="Nama Wisata" class="form-control mb-2" required>
-        <input type="text" name="username" id="username" placeholder="Username" class="form-control mb-2" required>
-        <input type="password" name="password" id="password" placeholder="Password" class="form-control mb-2" required>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" id="tutupModal" class="btn btn-secondary">Batal</button>
-      </form>
+<div class="modal" id="modalForm" tabindex="-1" style="display:none;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Tambah Pengelola</h5>
+          <button type="button" class="btn-close" id="tutupModal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formPengelola">
+            <input type="hidden" name="id" id="id">
+            <div class="mb-3">
+              <input type="text" name="nama" id="nama" placeholder="Nama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" name="nama_wisata" id="nama_wisata" placeholder="Nama Wisata" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" name="username" id="username" placeholder="Username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+              <button type="button" class="btn btn-secondary" id="tutupModal2">Batal</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
 <?php include("includes/foot.php"); ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
