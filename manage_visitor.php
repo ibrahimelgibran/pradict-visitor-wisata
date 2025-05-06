@@ -48,7 +48,7 @@ check_login();
                     <thead>
                       <tr>
                         <th class="text-center">No</th>
-                        <th>Full Name</th>
+                        <th>Nama Panjang</th>
                         <th>Contact Number</th>
                         <th>Email</th>
                         <th>Reg Date</th>
