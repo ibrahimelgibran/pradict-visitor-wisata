@@ -186,11 +186,13 @@ if (!empty($nama_wisata)) {
                 </div>
               </div>
             </div>
-            <?php @include("includes/footer.php"); ?>
+            
           </div>
         </div>
+        <?php @include("includes/footer.php"); ?>
+        <?php @include("includes/foot.php"); ?>
       </div>
-      <?php @include("includes/foot.php"); ?>
+     
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>

@@ -66,9 +66,10 @@ check_login();
       </div>
     </div>
 
-    <?php @include("includes/footer.php"); ?>
+    
   </div>
 </div>
+<?php @include("includes/footer.php"); ?>
 <?php @include("includes/foot.php"); ?>
 <script type="text/javascript">
 $(document).ready(function(){
