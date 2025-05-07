@@ -23,10 +23,10 @@ if(isset($_GET['restoreid']))
     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
         <thead>
             <tr>
-                <th class="text-center"></th>
+                <th class="text-center">No</th>
                 <th class="">Name</th>
-                <th class="">Mobile Number</th>
-                <th class="">Email</th>
+                <th class="">Nama Wisata</th>
+                <th class="">Username</th>
                 <th class="">Registered Users</th>
                 <th class="" style="width: 15%;">Action</th>
             </tr>

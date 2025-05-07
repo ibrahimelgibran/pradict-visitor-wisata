@@ -14,71 +14,10 @@ check_login();
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_sidebar.html -->
       <?php @include("includes/sidebar.php");?>
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card bg-gradient-info card-img-holder text-white" style="height: 150px;">
-                <div class="card-body" >
-                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Today's  Visitors</h4>
-                  <?php
-                  //todays visitors
-                  $query=mysqli_query($con,"select ID from tblvisitor where date(EnterDate)=CURDATE();");
-                  $count_today_visitors=mysqli_num_rows($query);
-                  ?> 
-                  <h2 class="mb-5"><?php echo $count_today_visitors;?></h2>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card bg-gradient-success card-img-holder text-white" style="height: 150px;">
-                <div class="card-body">
-                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Yesterday   Visitors</h4>
-                  <?php
-                  //Yesterdays visitors
-                  $query1=mysqli_query($con,"select ID from tblvisitor where date(EnterDate)=CURDATE()-1;");
-                  $count_yesterday_visitors=mysqli_num_rows($query1);
-                  ?>       
-                  <h2 class="mb-5"><?php echo $count_yesterday_visitors?></h2>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card bg-gradient-info card-img-holder text-white" style="height: 150px;">
-                <div class="card-body">
-                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Last 7 Days Visitors </h4>
-                  <?php
-                  //Last Sevendays visitors
-                  $query2=mysqli_query($con,"select ID from tblvisitor where date(EnterDate)>=(DATE(NOW()) - INTERVAL 7 DAY);");
-                  $count_lastsevendays_visitors=mysqli_num_rows($query2);
-                  ?>              
-                  <h2 class="mb-5"><?php echo $count_lastsevendays_visitors?></h2>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card bg-gradient-primary card-img-holder text-white" style="height: 150px;">
-                <div class="card-body">
-                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Total Visitors  Till Date</h4>
-                  <?php
-                  //Total Visitors visitors
-                  $query3=mysqli_query($con,"select ID from tblvisitor");
-                  $count_total_visitors=mysqli_num_rows($query3);
-                  ?>     
-                  <h2 class="mb-5"><?php echo $count_total_visitors?></h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <h1>SELAMAT DATANG</h1>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <?php @include("includes/footer.php");?>
+        
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
