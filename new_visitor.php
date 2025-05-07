@@ -101,7 +101,7 @@ if(isset($_POST['save']))
       </div>
       <!-- content-wrapper ends -->
       <!-- partial:../../partials/_footer.html -->
-      <?php @include("includes/footer.php");?>
+      
       <!-- partial -->
     </div>
     <!-- main-panel ends -->
@@ -109,6 +109,7 @@ if(isset($_POST['save']))
   <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
+<?php @include("includes/footer.php");?>
 <?php @include("includes/foot.php");?>
 <!-- End custom js for this page -->
 </body>
