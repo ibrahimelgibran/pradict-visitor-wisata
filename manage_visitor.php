@@ -67,40 +67,33 @@ if (!empty($nama_wisata)) {
                   </div>
                 </div>
 
-                
+
 
 
                 <div class="card mt-4">
-                  
+
                   <div class="card-body">
                     <!-- Form Filter Nama Wisata -->
-                <form method="post" class="form-inline mb-3">
-                  <label class="mr-2">Nama Wisata:</label>
-                  <select name="nama_wisata" class="form-control mr-2">
-                    <option value="">Semua</option>
-                    <?php
-                    $stmt = $dbh->prepare("SELECT DISTINCT NamaWisata FROM tourism_data ORDER BY NamaWisata");
-                    $stmt->execute();
-                    $wisatas = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    foreach ($wisatas as $wisata) {
-                      $selected = ($nama_wisata == $wisata->NamaWisata) ? 'selected' : '';
-                      echo "<option value='" . htmlentities($wisata->NamaWisata) . "' $selected>" . htmlentities($wisata->NamaWisata) . "</option>";
-                    }
-                    ?>
-                  </select>
-                  <button type="submit" name="filter" class="btn btn-primary">Tampilkan</button>
-                </form>
+                    <form method="post" class="form-inline mb-3">
+                      <label class="mr-2">Nama Wisata:</label>
+                      <select name="nama_wisata" class="form-control mr-2">
+                        <option value="">Semua</option>
+                        <?php
+                        $stmt = $dbh->prepare("SELECT DISTINCT NamaWisata FROM tourism_data ORDER BY NamaWisata");
+                        $stmt->execute();
+                        $wisatas = $stmt->fetchAll(PDO::FETCH_OBJ);
+                        foreach ($wisatas as $wisata) {
+                          $selected = ($nama_wisata == $wisata->NamaWisata) ? 'selected' : '';
+                          echo "<option value='" . htmlentities($wisata->NamaWisata) . "' $selected>" . htmlentities($wisata->NamaWisata) . "</option>";
+                        }
+                        ?>
+                      </select>
+                      <button type="submit" name="filter" class="btn btn-primary">Tampilkan</button>
+                    </form>
                     <h4 class="card-title">Grafik Jumlah Pengunjung</h4>
                     <canvas id="chartVisitor" height="100"></canvas>
-
-
-
                     <div class="table-responsive p-3">
                       <div class="card-body">
-
-
-
-
                         <!-- Form Filter Rentang Tanggal -->
                         <form method="post" class="form-inline my-3">
                           <input type="hidden" name="nama_wisata" value="<?= htmlentities($nama_wisata) ?>">
@@ -114,7 +107,12 @@ if (!empty($nama_wisata)) {
                         </form>
 
                       </div>
-
+                      <!-- Export buttons -->
+                      <div class="mb-3">
+                        <button type="button" id="exportPDF" class="btn btn-danger mr-2"><i class="mdi mdi-file-pdf"></i> Export PDF</button>
+                        <button type="button" id="exportExcel" class="btn btn-success"><i class="mdi mdi-file-excel"></i> Export Excel</button>
+                      </div>
+                      
                       <table class="table table-hover table-bordered" id="dataTableHover">
                         <thead>
                           <tr>
@@ -186,15 +184,18 @@ if (!empty($nama_wisata)) {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
         <?php @include("includes/footer.php"); ?>
         <?php @include("includes/foot.php"); ?>
       </div>
-     
+
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
       <script>
         document.addEventListener('DOMContentLoaded', function() {
           const ctx = document.getElementById('chartVisitor').getContext('2d');
@@ -240,6 +241,122 @@ if (!empty($nama_wisata)) {
                 $("#editData5").modal('show');
               }
             });
+          });
+          
+          // Helper function to get table data
+          function getTableData() {
+            const table = document.getElementById('dataTableHover');
+            const headers = [];
+            const tableData = [];
+            
+            // Generate title
+            let title = 'Data Wisata';
+            if ('<?= $nama_wisata ?>') {
+              title += ' - <?= htmlentities($nama_wisata) ?>';
+            }
+            if ('<?= $from_date ?>' && '<?= $to_date ?>') {
+              title += ' (<?= date("d-m-Y", strtotime($from_date)) ?> s/d <?= date("d-m-Y", strtotime($to_date)) ?>)';
+            }
+            
+            // Headers
+            const headerCells = table.querySelectorAll('thead th');
+            headerCells.forEach((cell, index) => {
+              // Skip the action column
+              if (index < headerCells.length - 1) {
+                headers.push(cell.textContent.trim());
+              }
+            });
+            
+            // Rows
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+              const rowData = [];
+              const cells = row.querySelectorAll('td');
+              cells.forEach((cell, index) => {
+                // Skip the action column
+                if (index < cells.length - 1) {
+                  rowData.push(cell.textContent.trim());
+                }
+              });
+              tableData.push(rowData);
+            });
+            
+            return { title, headers, tableData };
+          }
+          
+          // PDF Export Functionality
+          document.getElementById('exportPDF').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('id-ID');
+            const { title, headers, tableData } = getTableData();
+            
+            // Add title
+            doc.setFontSize(16);
+            doc.text(title, 14, 15);
+            
+            // Add current date
+            doc.setFontSize(10);
+            doc.text('Tanggal cetak: ' + dateStr, 14, 22);
+            
+            // Create table
+            doc.autoTable({
+              head: [headers],
+              body: tableData,
+              startY: 25,
+              theme: 'grid',
+              styles: {
+                fontSize: 8
+              },
+              headStyles: {
+                fillColor: [66, 135, 245],
+                textColor: [255, 255, 255],
+                fontStyle: 'bold'
+              },
+              alternateRowStyles: {
+                fillColor: [240, 240, 240]
+              }
+            });
+            
+            // Save PDF
+            doc.save('data_wisata_' + dateStr + '.pdf');
+          });
+          
+          // Excel Export Functionality
+          document.getElementById('exportExcel').addEventListener('click', function() {
+            const { title, headers, tableData } = getTableData();
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('id-ID').replace(/\//g, '-');
+            
+            // Create workbook and worksheet
+            const wb = XLSX.utils.book_new();
+            
+            // Add title row and empty row
+            const titleRow = [[title]];
+            const dateRow = [['Tanggal cetak: ' + dateStr]];
+            const emptyRow = [[]];
+            
+            // Combine headers and data
+            const excelData = [
+              ...titleRow,
+              ...dateRow,
+              ...emptyRow,
+              headers,
+              ...tableData
+            ];
+            
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            
+            // Style the title cell (merge cells)
+            if(!ws['!merges']) ws['!merges'] = [];
+            ws['!merges'].push({s:{r:0,c:0}, e:{r:0,c:headers.length-1}}); // Merge title cells
+            
+            // Add to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Data Wisata");
+            
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, 'data_wisata_' + dateStr + '.xlsx');
           });
         });
       </script>
