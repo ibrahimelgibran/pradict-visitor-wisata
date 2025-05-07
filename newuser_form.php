@@ -100,6 +100,7 @@ if(!empty($_POST["fullname"])) {
         return true;
     }
 </script>
+
 <div class="card-body">
     <form  method="post" name="signup" onSubmit="return valid();">
         <div class="row ">
@@ -111,13 +112,7 @@ if(!empty($_POST["fullname"])) {
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" name="staffid" placeholder="Staff ID" required="required">
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="User Name" onBlur="checkAvailability2()" required="required">
-                <span id="user-availability-status2" style="font-size:12px;"></span>
+                <input type="text" class="form-control" name="staffid" placeholder="No" required="required">
             </div>
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" name="firstname" placeholder="First Name" required="required">
@@ -128,19 +123,23 @@ if(!empty($_POST["fullname"])) {
                 <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="required">
             </div>
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" name="mobileno" placeholder="Mobile Number" maxlength="10" required="required">
+                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Nama Panggilan" onBlur="checkAvailability2()" required="required">
+                <span id="user-availability-status2" style="font-size:12px;"></span>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
-                <input type="email" class="form-control" name="emailid" id="emailid" onBlur="checkAvailability()" placeholder="Email Address" required="required">
+                <input type="text" class="form-control" name="mobileno" placeholder="Nama Wisata" maxlength="50" required="required">
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="emailid" id="emailid" onBlur="checkAvailability()" placeholder="Username" required="required">
                 <span id="user-availability-status" style="font-size:12px;"></span> 
             </div>
-            <div class="form-group col-md-6">
-                <input type="password"  class="form-control" name="password" placeholder="Password" required="required">
-            </div>
         </div>
         <div class="row">
+            <div class="form-group col-md-6">
+                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+            </div>
             <div class="form-group col-md-6">
                 <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" required="required">
             </div>

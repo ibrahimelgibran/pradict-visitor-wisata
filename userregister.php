@@ -1,22 +1,21 @@
 <?php
 include('includes/checklogin.php');
 check_login();
-if(isset($_GET['delid']))
-{
-    $rid=intval($_GET['delid']);
-    $sql="update tbladmin set Status='0' where ID='$rid'";
-    $query=$dbh->prepare($sql);
-    $query->bindParam(':rid',$rid,PDO::PARAM_STR);
-    $query->execute();
-    if ($query->execute()){
+
+if (isset($_GET['delid'])) {
+    $rid = intval($_GET['delid']);
+    $sql = "UPDATE tbladmin SET Status='0' WHERE ID = :rid";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':rid', $rid, PDO::PARAM_INT);
+    if ($query->execute()) {
         echo "<script>alert('User blocked');</script>"; 
         echo "<script>window.location.href = 'userregister.php'</script>";
-    }else{
-        echo '<script>alert("update failed! try again later")</script>';
+    } else {
+        echo '<script>alert("Update failed! Try again later")</script>';
     }
-    
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php @include("includes/head.php");?>
@@ -35,10 +34,10 @@ if(isset($_GET['delid']))
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="modal-header">
-                                <h5 class="modal-title" style="float: left;">Register user</h5>    
+                                <h5 class="modal-title" style="float: left;">Management Pengelola Wisata</h5>    
                                 <div class="card-tools" style="float: right;">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#delete" ></i> Blocked users
-                                    </button>
+                                    <!-- <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#delete" ></i> Blocked users
+                                    </button> -->
                                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#registeruser" ><i class="fas fa-plus" ></i> Register User
                                     </button>
                                 </div>      
@@ -48,7 +47,7 @@ if(isset($_GET['delid']))
                                 <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Register user</h4>
+                                            <h4 class="modal-title">Management Pengelola Wisata</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -103,20 +102,34 @@ if(isset($_GET['delid']))
                             </div>
                             <!--   end modal -->
                             <div class="card-body table-responsive p-3">
+
+                                                        <?php
+                            $countSql = "SELECT COUNT(*) AS total FROM tbladmin WHERE Status='1'";
+                            $countQuery = $dbh->prepare($countSql);
+                            $countQuery->execute();
+                            $countResult = $countQuery->fetch(PDO::FETCH_ASSOC);
+                            $totalUsers = $countResult['total'];
+                            ?>
+                            <div class="mb-3">
+                            <h5>Jumlah Pengelola Wisata: <?php echo $totalUsers; ?></h5>
+                            </div>
+
+
                                 <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                     <thead>
                                         <tr>
                                             <th class="text-center">No.</th>
-                                            <th class="">Name</th>
-                                            <th class="text-center">Mobile number</th>
-                                            <th class="">Email</th>
-                                            <th class=" text-center">Date registered</th>
+                                            <th class="">Nama</th>
+                                            <th class="text-center">Nama Wisata</th>
+                                            <th class="">Username</th>
+                                            <th class=" text-center">Password</th>
                                             <th class="text-center" style="width: 15%;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $sql="SELECT * from tbladmin where Status='1'";
+                                        
                                         $query = $dbh -> prepare($sql);
                                         $query->execute();
                                         $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -128,12 +141,12 @@ if(isset($_GET['delid']))
                                                 ?>
                                                 <tr>
                                                     <td class="text-center"><?php echo htmlentities($cnt);?></td>
-                                                    <td><?php  echo htmlentities($row->FirstName);?>&nbsp;<?php  echo htmlentities($row->LastName);?></td>
-                                                    <td class="text-center">0<?php  echo htmlentities($row->MobileNumber);?></td>
+                                                    <td><?php  echo htmlentities($row->UserName);?></td>
+
+                                                    <td class="text-center"><?php  echo htmlentities($row->MobileNumber);?></td>
                                                     <td><?php  echo htmlentities($row->Email);?></td>
                                                     <td class="text-center">
-                                                        <span ><?php  echo htmlentities(date("d-m-Y", strtotime($row->AdminRegdate)));?></span>
-                                                    </td>
+                                                    <?php echo str_repeat("•", 5); ?></td>
                                                     <td class=" text-center">
                                                         <a href="#"  class=" edit_data" id="<?php echo  ($row->ID); ?>" title="click for edit"><i class="mdi mdi-pencil-box-outline" aria-hidden="true"></i></a>
                                                         <a href="userregister.php?delid=<?php echo ($row->ID);?>" onclick="return confirm('Do you really want to Delete ?');" title="Delete this User"><i class="mdi mdi-delete fa-delete"style="color: #f05050"  aria-hidden="true"></i></a> </td>
@@ -180,6 +193,8 @@ if(isset($_GET['delid']))
                 });
             });
         });
+        
     </script>
+    
 </body>
 </html>

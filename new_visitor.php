@@ -3,35 +3,33 @@ include('includes/checklogin.php');
 check_login();
 if(isset($_POST['save']))
 {
-  $fullname=$_POST['fullname'];
-  $mobnumber=$_POST['mobilenumber'];
-  $email=$_POST['email'];
-  $address=$_POST['address'];
-  $meet=$_POST['whomtomeet'];
-  $department=$_POST['department'];
-  $reason=$_POST['reasontomeet'];
-  $sql="insert into tblvisitor(FullName,Email,MobileNumber,Address,WhomtoMeet,Deptartment,ReasontoMeet) value(:fullname,:email,:mobnumber,:address,:meet,:department,:reason)";
-  $query=$dbh->prepare($sql);
-  $query->bindParam(':fullname',$fullname,PDO::PARAM_STR);
-  $query->bindParam(':email',$email,PDO::PARAM_STR);
-  $query->bindParam(':mobnumber',$mobnumber,PDO::PARAM_STR);
-  $query->bindParam(':address',$address,PDO::PARAM_STR);
-  $query->bindParam(':meet',$meet,PDO::PARAM_STR);
-  $query->bindParam(':department',$department,PDO::PARAM_STR);
-  $query->bindParam(':reason',$reason,PDO::PARAM_STR);
+  $nama_wisata = $_POST['nama_wisata'];
+  $jumlah_pengunjung = $_POST['jumlah_pengunjung'];
+  $pendapatan = $_POST['pendapatan'];
+  $sewa_gedung = $_POST['sewa_gedung'];
+  $rentang_waktu = $_POST['rentang_waktu'];
+  $tanggal = $_POST['tanggal'];
+
+  $sql = "INSERT INTO tourism_data(NamaWisata, JumlahPengunjung, Pendapatan, SewaGedung, RentangWaktu, Tanggal)
+          VALUES (:nama_wisata, :jumlah_pengunjung, :pendapatan, :sewa_gedung, :rentang_waktu, :tanggal)";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':nama_wisata', $nama_wisata, PDO::PARAM_STR);
+  $query->bindParam(':jumlah_pengunjung', $jumlah_pengunjung, PDO::PARAM_INT);
+  $query->bindParam(':pendapatan', $pendapatan, PDO::PARAM_STR);
+  $query->bindParam(':sewa_gedung', $sewa_gedung, PDO::PARAM_STR);
+  $query->bindParam(':rentang_waktu', $rentang_waktu, PDO::PARAM_STR);
+  $query->bindParam(':tanggal', $tanggal, PDO::PARAM_STR);
   $query->execute();
-  $LastInsertId=$dbh->lastInsertId();
-  if ($LastInsertId>0) 
-  {
-    echo '<script>alert("Registered successfully")</script>';
+
+  if ($dbh->lastInsertId()) {
+    echo '<script>alert("Data berhasil disimpan!")</script>';
     echo "<script>window.location.href ='new_visitor.php'</script>";
-  }
-  else
-  {
-    echo '<script>alert("Something Went Wrong. Please try again")</script>';
+  } else {
+    echo '<script>alert("Gagal menyimpan data.")</script>';
   }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php @include("includes/head.php");?>
@@ -50,49 +48,47 @@ if(isset($_POST['save']))
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                <div class="modal-header">
-                <h5 class="modal-title" style="float: left;">Register Visitor</h5>
+                <h5 class="modal-title" style="float: left;">Input Data Tempat Wisata</h5>
               </div>
               <div class="col-md-12 mt-4">
-                <form class="forms-sample" method="post" enctype="multipart/form-data" class="form-horizontal">
-                  <div class="row ">
-                    <div class="form-group col-md-6 ">
-                      <label for="exampleInputPassword1">Full Names</label>
-                      <input type="text" id="fullname" name="fullname" placeholder="Full Name" class="form-control" required="">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="exampleInputName1">Visitor Email </label>
-                      <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control" required="">
-                    </div>
-                  </div>
-                  <div class="row ">
-                    <div class="form-group col-md-6 ">
-                      <label for="exampleInputPassword1">Contact Number</label>
-                      <input type="text" id="mobilenumber" name="mobilenumber" placeholder="Mobile Number" class="form-control" maxlength="10" required="">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="exampleInputName1">Whom to Meet </label>
-                      <input type="text" id="whomtomeet" name="whomtomeet" placeholder="Whom to Meet" class="form-control" required="">
-                    </div>
-                  </div>
-                  <div class="row ">
-                    <div class="form-group col-md-6 ">
-                      <label for="exampleInputPassword1">Department</label>
-                      <input type="text" id="department" name="department" placeholder="Department" class="form-control" required="">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="exampleInputName1">Reason To Meet </label>
-                      <input type="text" id="reasontomeet" name="reasontomeet" placeholder="Reason To Meet" class="form-control" required="">
-                    </div>
-                  </div>
-                  <div class="row ">
-                    <div class="form-group col-md-6 offset-md-6 ">
-                      <label for="exampleInputPassword1">Address</label>
-                      <textarea name="address" id="address" rows="9" placeholder="Enter Visitor Address..." class="form-control" required=""></textarea>
-                    </div>
+              <form class="forms-sample" method="post">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Nama Wisata</label>
+      <input type="text" name="nama_wisata" class="form-control" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Jumlah Pengunjung</label>
+      <input type="number" name="jumlah_pengunjung" class="form-control" required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Pendapatan (Rp)</label>
+      <input type="number" name="pendapatan" class="form-control" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Sewa Gedung (Rp)</label>
+      <input type="number" name="sewa_gedung" class="form-control" required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Rentang Waktu</label>
+      <select name="rentang_waktu" class="form-control" required>
+        <option value="Harian">Harian</option>
+        <option value="Mingguan">Mingguan</option>
+        <option value="Bulanan">Bulanan</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Tanggal</label>
+      <input type="date" name="tanggal" class="form-control" required>
+    </div>
+  </div>
+  <button type="submit" name="save" class="btn btn-info mr-2 mb-4">Simpan</button>
+</form>
 
-                  </div>
-                  <button type="submit" style="float: left;" name="save" class="btn btn-info  mr-2 mb-4">Save</button>
-                </form>
               </div>
             </div>
           </div>

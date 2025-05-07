@@ -7,22 +7,30 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="manage_pengelola.php">
                 <span class="menu-title">Manage Pengelola</span>
+                <i class="mdi mdi-account menu-icon"></i>
+            </a>
+        </li> -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="new_visitor.php">
+                <span class="menu-title">Input Data Wisata</span>
                 <i class="mdi mdi-account menu-icon"></i>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="new_visitor.php">
-                <span class="menu-title">New Visitor</span>
+            <a class="nav-link" href="hasil_predik.php">
+                <span class="menu-title">Hasil Predik</span>
                 <i class="mdi mdi-account menu-icon"></i>
             </a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" href="manage_visitor.php">
-                <span class="menu-title">Manage visitors</span>
+                <span class="menu-title">Tempat Data Wisata</span>
                 <i class="mdi mdi-account-multiple menu-icon"></i>
             </a>
         </li>
@@ -43,14 +51,14 @@
                     ?>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                            <span class="menu-title">User management</span>
+                            <span class="menu-title">Management Wisata</span>
                             <i class="menu-arrow"></i>
                             <i class="mdi mdi-account-multiple menu-icon"></i>
                         </a>
                         <div class="collapse" id="general-pages">
 
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="userregister.php">Register user </a></li>
+                                <li class="nav-item"> <a class="nav-link" href="userregister.php">Register Wisata </a></li>
                                 <li class="nav-item"> <a class="nav-link" href="user_permission.php"> User permissions</a></li>
 
                             </ul>
@@ -61,18 +69,6 @@
                 } 
             }
         } ?> 
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Reports</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-database menu-icon"></i>
-            </a>
-            <div class="collapse" id="reports">
-                <ul class="nav flex-column sub-menu">
-                 <!--  -->
-                 <li class="nav-item"> <a class="nav-link" href="btndates_report_details.php">Btn dates reports</a></li>
-             </ul>
-         </div>
-     </li>
+        
  </ul>
 </nav>

@@ -51,11 +51,11 @@ if(isset($_POST['saveupdates']))
           <input type="text" name="lastname2" class="form-control" id="lastname2" value="<?php  echo $row->LastName;?>" required>
         </div>
         <div class="form-group">
-          <label for="exampleInputName1">Phone No.</label>
+          <label for="exampleInputName1">Nama Wisata</label>
           <input type="text" name="phone2" class="form-control" id="phone2" value="<?php  echo $row->MobileNumber;?>"  required>
         </div>
         <div class="form-group">
-          <label for="exampleInputName1">Email</label>
+          <label for="exampleInputName1">Username</label>
           <input type="text" name="email2" class="form-control" id="email2" value="<?php  echo $row->Email;?>"  required>
         </div>
         <?php $cnt=$cnt+1;
