@@ -30,7 +30,7 @@
 
         <li class="nav-item">
             <a class="nav-link" href="manage_visitor.php">
-                <span class="menu-title">Tempat Data Wisata</span>
+                <span class="menu-title">Data Tempat Wisata</span>
                 <i class="mdi mdi-account-multiple menu-icon"></i>
             </a>
         </li>

@@ -10,7 +10,7 @@
     <div class="search-field ">
       <form class="d-flex align-items-center h-100" name="search" action="search_visitor.php" method="post" >
         <div class="input-group" style="background-color: #f2edf3;">
-          <input type="text" class="form-control bg-transparent border-0"name="searchdata" id="searchdata" placeholder="Search by names &amp; mobile no" required="true" >
+          <input type="text" class="form-control bg-transparent border-0"name="searchdata" id="searchdata" placeholder="Search" required="true" >
         </div>
         <button class="input-group-prepend bg-transparent" type="submit" name="search" style="background-color: #4272d7;">
          <i class="input-group-text border-0 mdi mdi-magnify"></i>
